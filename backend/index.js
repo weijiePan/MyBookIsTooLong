@@ -14,8 +14,8 @@ const editorFile = path.join(pythonVenvPath, "..", "editor.py");
 const importDocumentFolder = path.join(__dirname,  "importedDocument");
 const exportedDocumentFolder = path.join(__dirname,  "exportedDocument");
 
-const documentName = "ebook - The C Programming Language Ritchie & kernighan -.doc - C_Book_2nd.pdf";
-const exportName = "c.pdf";
+const documentName = "Can't Hurt Me_ Master Your Mind and Defy the Odds - Can_t-Hurt-Me-David-Goggins.pdf";
+const exportName = "goggins.pdf";
 const importedDocument =  path.join(importDocumentFolder, documentName);
 const exportedDocument = path.join(exportedDocumentFolder, exportName);
 
