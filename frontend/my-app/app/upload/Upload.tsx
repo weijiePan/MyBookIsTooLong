@@ -7,7 +7,6 @@ import { blob } from "stream/consumers";
 import {useRouter} from "next/navigation"
 import {insertFile} from "../util/store"
 import "./upload.css"
-import {initiateUpload} from "../util/upload"
 
 import DocumentUploadBar from "../components/UploadBar"
 
@@ -16,7 +15,7 @@ type blobURL={url:string, name:string, status:0|1};
 
 
 export default function Upload() {
-    const serverUploadUrl = `http://localhost:3001`;
+    const serverUploadUrl = `https://mybooklongbackend.gentlebeach-ec9f59b6.eastus.azurecontainerapps.io`;
     const router = useRouter();
     let [documents, changeDocuments] = useState<{name:string, file:File, isInitiated:boolean}[]>([]);
     let [isDocumentUploaded, changeIsDocumentUploaded] = useState<{string:boolean}[]>([]);

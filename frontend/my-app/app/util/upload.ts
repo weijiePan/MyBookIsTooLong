@@ -1,48 +1,26 @@
 
 import {insertFile} from "./store"
-const url = `http://localhost:3001`;
-// async function initiateUpload(files:File[]) {
-//     console.log("uploading");
-//     //get data
-//     const documentData = []//{id, documentLink}
-//     for(const file of files){
-//         console.log("upload initatied");
-//         console.log(file.name);
-//         const uploadResp = await uploadDocument(file, file.name);
-//         if(!uploadResp.success){
-//             return({success:false, errorMessage:`${uploadResp.uploadId} failed upload`});
-//         }
-//         documentData.push(uploadResp.downloadLink);
-//     }
-//     console.log(documentData);
-//     return({success:true, documentData:documentData});
-
-// }
+const url = `https://mybooklongbackend.gentlebeach-ec9f59b6.eastus.azurecontainerapps.io`;
 async function uploadDocument(document:Blob, fileName:string, tocStart:Number, tocEnd:Number){
     console.log("ind document upload");
     const initiateEndPoint = "/uploads/start";
     //initiate upload and get upload id
     const initiateResp = await fetch(`${url}${initiateEndPoint}?fileName=${fileName}`);
-    const respData = await initiateResp.json()
-    if(!respData.success){
-        console.log(respData);
-        return respData;
+    if(initiateResp.status != 200){
+        console.log("failed");
+        return;
     }
-
-    const uploadId = respData.data.uploadId;
-    if(!uploadId){
-        const err = "invalid/undefined uploadId";
-        console.log(err);
-        return({success:false, data:null, error:err});
-    }
+    const uploadId = (await initiateResp.json()).data.uploadId;
+    console.log(uploadId)
     const docStream = document.stream();
     console.log("started streaming");
     for await(const chunk of docStream as any){
         const chunkResp = await chunkUpload(uploadId, chunk);
-        if(!chunkResp.success){
-            console.log(chunkResp);
-            return(chunkResp);
+        if(chunkResp.status != 200){
+            console.log("chunk upload failed");
+            throw new Error("chunk upload failed");
         }
+        
     }
 
     const completion = await completeUpload(uploadId, tocStart, tocEnd);
@@ -60,8 +38,7 @@ async function chunkUpload(uploadId:string, data:Blob){
         method:"POST",   
         body:data,
     })
-    const respMessage = await resp.json();
-    return respMessage;
+    return resp;
   
 }
 async function completeUpload(uploadId:string, tocStart:Number, tocEnd:Number){
