@@ -42,6 +42,7 @@ async function chunkUpload(uploadId:string, data:Blob){
   
 }
 async function completeUpload(uploadId:string, tocStart:Number, tocEnd:Number){
+    console.log("completeUpload");
     const completeEndPoint = `/uploads/complete`;
     console.log("tocStart " + tocStart);
     console.log("tocEnd " + tocEnd);
@@ -56,7 +57,6 @@ async function completeUpload(uploadId:string, tocStart:Number, tocEnd:Number){
                 break;
             }else{
                 console.log("value");
-                console.log(value);
                 fragments.push(value);
             }
         }
@@ -68,6 +68,5 @@ async function completeUpload(uploadId:string, tocStart:Number, tocEnd:Number){
     }else{
         throw new Error("download request body null");
     }
-    
 }
 export { uploadDocument, completeUpload}

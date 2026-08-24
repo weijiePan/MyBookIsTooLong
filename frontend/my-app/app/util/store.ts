@@ -33,7 +33,8 @@ function insertFile(file:Blob, uploadId:string){
     }
 }
 async function getFileUrls():Promise<{url:string, name:string}>{
-    const url = `http://localhost:3001`;
+    console.log("getFileUrls");
+    const url = `https://mybooklongbackend.gentlebeach-ec9f59b6.eastus.azurecontainerapps.io`;
     const endPoint = "/getFileName/"
     return new Promise((resolve, reject)=>{
         
