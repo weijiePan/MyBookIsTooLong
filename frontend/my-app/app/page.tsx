@@ -2,7 +2,7 @@
 
 import "./home.css"
 import { useState, useEffect } from "react"
-import { useSearchParams , useRouter} from "next/navigation"
+import { useRouter} from "next/navigation"
 import {getFileUrls, clearDatabase} from "./util/store"
 import Upload from "./upload/Upload"
 
@@ -20,7 +20,6 @@ export default function Home() {
   };
   let [isDocumentsPage, changeIsDocumentsPage] = useState(true);
   let [blobURLS, changeBlobURLS]: [blobURL[], Function] = useState([]);
-  const searchParams = useSearchParams();
   const router = useRouter();
   useEffect(() => {
     console.log('start finding urls');
