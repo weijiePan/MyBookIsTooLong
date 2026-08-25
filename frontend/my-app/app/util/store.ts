@@ -88,9 +88,7 @@ function clearDatabase(router){
         const documentQuery = transaction.objectStore(tableName);
         const deleteReq = documentQuery.clear();
         deleteReq.onsuccess = ()=>{
-            console.log("delete");
             window.location.reload();
-            console.log("refreshed");
         }
     }
 }

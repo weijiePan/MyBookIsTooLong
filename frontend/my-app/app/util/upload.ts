@@ -2,7 +2,6 @@
 import {insertFile} from "./store"
 const url = `https://mybooklongbackend.gentlebeach-ec9f59b6.eastus.azurecontainerapps.io`;
 async function uploadDocument(document:Blob, fileName:string, tocStart:Number, tocEnd:Number){
-    console.log("ind document upload");
     const initiateEndPoint = "/uploads/start";
     //initiate upload and get upload id
     const initiateResp = await fetch(`${url}${initiateEndPoint}?fileName=${fileName}`);
@@ -11,13 +10,10 @@ async function uploadDocument(document:Blob, fileName:string, tocStart:Number, t
         return;
     }
     const uploadId = (await initiateResp.json()).data.uploadId;
-    console.log(uploadId)
     const docStream = document.stream();
-    console.log("started streaming");
     for await(const chunk of docStream as any){
         const chunkResp = await chunkUpload(uploadId, chunk);
         if(chunkResp.status != 200){
-            console.log("chunk upload failed");
             throw new Error("chunk upload failed");
         }
         
